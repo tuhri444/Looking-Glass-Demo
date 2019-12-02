@@ -11,10 +11,6 @@ public class TurnPipes : MonoBehaviour
     private Vector3 targetVector;
     public Vector3 Direction;
     public String Face;
-    private bool left;
-    private bool right;
-    private bool up;
-    private bool down;
 
     void Start()
     {
@@ -90,33 +86,31 @@ public class TurnPipes : MonoBehaviour
         }
 
         #endregion
-
-        left = Input.GetAxis("Horizontal2") < 0 ? true : false;
-        right = Input.GetAxis("Horizontal2") > 0 ? true : false;
-        up = Input.GetAxis("Vertical2") < 0 ? true : false;
-        down = Input.GetAxis("Vertical2") > 0 ? true : false;
-        if (left && !turning)
+        FindObjectOfType<VariableManager>().turning = turning;
+        FindObjectOfType<VariableManager>().targetRotation = targetRotation;
+        FindObjectOfType<VariableManager>().turnSpeed = turnSpeed;
+        if (Input.GetKeyDown(KeyCode.LeftArrow) && !turning)
         {
             targetVector = Vector3.up * -90;
             targetRotation = transform.rotation;
             targetRotation = Quaternion.Euler(targetVector) * targetRotation;
             turning = true;
         }
-        if (right && !turning)
+        if (Input.GetKeyDown(KeyCode.RightArrow) && !turning)
         {
             targetVector = (Vector3.up) * 90;
             targetRotation = transform.rotation;
             targetRotation = Quaternion.Euler(targetVector) * targetRotation;
             turning = true;
         }
-        if (up && !turning)
+        if (Input.GetKeyDown(KeyCode.UpArrow) && !turning)
         {
             targetVector = (Vector3.right) * 90;
             targetRotation = transform.rotation;
             targetRotation = Quaternion.Euler(targetVector) * targetRotation;
             turning = true;
         }
-        if (down && !turning)
+        if (Input.GetKeyDown(KeyCode.DownArrow) && !turning)
         {
             targetVector = (Vector3.right) * -90;
             targetRotation = transform.rotation;

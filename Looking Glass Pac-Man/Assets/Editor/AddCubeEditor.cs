@@ -30,15 +30,7 @@ public class AddCubeEditor : Editor
             }
             else if (e.type == EventType.KeyDown && e.keyCode == KeyCode.Q)
             {
-                Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 100.0f))
-                {
-                    Vector3 normal = hit.normal;
-                    Vector3 newLocation = normal * collider.size.x;
-                    newLocation += hit.transform.position;
-                    cubeAddition.createCube(newLocation, Quaternion.identity, prefabs.teleportPrefab);
-                }
+                EditorGUI.DrawRect(new Rect(50, 350, 70, 70), Color.green);
             }
         }
     }

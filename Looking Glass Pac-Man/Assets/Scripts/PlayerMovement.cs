@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,55 +8,42 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 targetVector;
     private Vector3 destination;
     private bool destinationReached;
-    private bool left;
-    private bool right;
-    private bool up;
-    private bool down;
-    private AudioSource wakawaka;
 
     [SerializeField,Range(0f,10f)]
     private float speed = 10;
 
     [SerializeField] private TurnPipes level;
 
-    void Start()
-    {
-        destination = transform.position;
-        wakawaka = GetComponent<AudioSource>();
-    }
-
     void Update()
     {
-        left = Input.GetAxis("Horizontal1") < 0 ? true : false;
-        right = Input.GetAxis("Horizontal1") > 0 ? true : false;
-        up = Input.GetAxis("Vertical1") < 0 ? true : false;
-        down = Input.GetAxis("Vertical1") > 0 ? true : false;
+        FindObjectOfType<VariableManager>().speed = speed;
+        FindObjectOfType<VariableManager>().playerPos = transform.position;
         Ray rayCheck = new Ray(transform.position, Vector3.zero); //Direction undetermined
         RaycastHit hit;
 
         //Determine direction
-        if (left)
+        if (Input.GetKeyDown(KeyCode.A))
         {
             rayCheck.direction = Vector3.left;
             if (Physics.Raycast(rayCheck, out hit, 1f))
                 transform.rotation = Quaternion.Euler(Vector3.down * 90);
         }
 
-        if (right)
+        if (Input.GetKeyDown(KeyCode.D))
         {
             rayCheck.direction = Vector3.right;
             if (Physics.Raycast(rayCheck, out hit, 1f))
                 transform.rotation = Quaternion.Euler(Vector3.up * 90);
         }
 
-        if (up)
+        if (Input.GetKeyDown(KeyCode.W))
         {
             rayCheck.direction = Vector3.up;
             if (Physics.Raycast(rayCheck, out hit, 1f))
                 transform.rotation = Quaternion.Euler(Vector3.left * 90);
         }
 
-        if (down)
+        if (Input.GetKeyDown(KeyCode.S))
         {
             rayCheck.direction = Vector3.down;
             if (Physics.Raycast(rayCheck, out hit, 1f))
@@ -85,13 +71,9 @@ public class PlayerMovement : MonoBehaviour
 
         if (destinationReached == false)
         {
-            if (!level.turning)
-            {
-                wakawaka.Play();
-                transform.position = Vector3.MoveTowards(transform.position, destination, Time.deltaTime * speed);
-            }
-            else wakawaka.Stop();
-
+            if(!level.turning)
+                transform.position = Vector3.MoveTowards(transform.position,destination,Time.deltaTime*speed);
+            
         }
 
     }
