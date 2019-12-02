@@ -19,7 +19,7 @@ public class Blinky : MonoBehaviour
     void Start()
     {
         p = GetComponent<PathFinderAI>();
-        vm =transform.parent.GetComponent<VariableManager>();
+        vm =FindObjectOfType<VariableManager>();
         currentMode = MoveMode.CHASE;
     }
 
