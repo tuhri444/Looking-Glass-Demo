@@ -6,7 +6,7 @@ public class Blinky : MonoBehaviour
 {
     PathFinderAI p;
     VariableManager vm;
-    bool start = false;
+
     enum MoveMode
     {
         STOP,

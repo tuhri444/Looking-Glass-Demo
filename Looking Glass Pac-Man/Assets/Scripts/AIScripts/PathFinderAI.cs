@@ -5,8 +5,8 @@ using UnityEngine;
 public class PathFinderAI : MonoBehaviour
 {
     GameManager gm;
-    [HideInInspector] public Vector3 target;
-    [HideInInspector] public Vector3 currentPos;
+    public Vector3 target;
+    public Vector3 currentPos;
     [HideInInspector] public Vector3 startPos;
     private float speed = 1;
     float max = float.MaxValue;
@@ -38,8 +38,8 @@ public class PathFinderAI : MonoBehaviour
 
     void Update()
     { 
-        Debug.Log(gm.nodes[0].connections);
-        if (currentPos != target)
+        //Debug.Log(gm.nodes[0].connections);
+        if (Vector3.Distance(currentPos,target) > 0.08f)
         {
             if (!move)
             {
@@ -76,8 +76,8 @@ public class PathFinderAI : MonoBehaviour
                     previousNode = currentNode;
                 }
 
-                currentPos = Vector3.MoveTowards(transform.localPosition, nextNode.Position, Time.deltaTime * vm.speed);
-                if (Vector3.Distance(currentPos, nextNode.Position) < .00000002f)
+                currentPos = Vector3.MoveTowards(transform.localPosition, nextNode.Position, Time.deltaTime * vm.speed * .1f);
+                if (Vector3.Distance(currentPos, nextNode.Position) < 0.0001f)
                 {
                     counter = 0;
                     currentPos = nextNodePos;

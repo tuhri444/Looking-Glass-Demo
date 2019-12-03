@@ -4,13 +4,15 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [HideInInspector] public List<Node> nodes = new List<Node>();
+    List<Transform> children = new List<Transform>();
     // Start is called before the first frame update
     void Awake()
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            if (transform.GetChild(i).name.Contains("Pipe")|| transform.GetChild(i).name.Contains("Cube"))
+            if (transform.GetChild(i).name.Contains("Pipe") || transform.GetChild(i).name.Contains("Cube"))
             {
+                children.Add(transform.GetChild(i));
                 Node node = new Node();
                 node.Position = transform.GetChild(i).localPosition;
                 nodes.Add(node);
@@ -45,10 +47,14 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < nodes.Count; i++)
         {
-            if (transform.GetChild(i).name.Contains("Pipe") || transform.GetChild(i).name.Contains("Cube"))
+            nodes[i].Position = children[i].localPosition;
+        }
+
+        foreach (Node n in nodes)
+        {
+            foreach (Node child in n.connectionsList)
             {
-                //Debug.Log(nodes.Count + " , " + (transform.childCount - 5f));
-                nodes[i].Position = transform.GetChild(i).localPosition;
+                Debug.DrawLine(n.Position, child.Position, Color.blue);
             }
         }
     }
@@ -67,7 +73,11 @@ public class Node
     }
     public Vector3 Position
     {
-        get { return position; }
+        get
+        {
+            //position = new Vector3(position.x,0,position.z);
+            return position;
+        }
         set { position = value; }
     }
     public List<Node> connectionsList

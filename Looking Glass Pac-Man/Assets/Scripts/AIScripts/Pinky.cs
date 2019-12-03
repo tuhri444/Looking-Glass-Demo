@@ -6,7 +6,7 @@ public class Pinky : MonoBehaviour
 {
     PathFinderAI p;
     VariableManager vm;
-    bool start = false;
+
     enum MoveMode
     {
         STOP,
@@ -19,41 +19,36 @@ public class Pinky : MonoBehaviour
     void Start()
     {
         p = GetComponent<PathFinderAI>();
-        vm = transform.parent.GetComponent<VariableManager>();
-        currentMode = MoveMode.CHASE;
+        vm = FindObjectOfType<VariableManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Alpha7))
-        {
-            start = true;
-        }
-        if (currentMode == MoveMode.STOP)
-        {
-            p.target = p.currentPos;
-        }
-        if (currentMode == MoveMode.CHASE && start)
-        {
-            p.target = vm.playerPos;
-        }
-        if (currentMode == MoveMode.SCATTER)
-        {
-            p.target = new Vector3(0, 0, 3);
-        }
-        if (Input.GetKeyUp(KeyCode.Q))
+        if (Input.GetKeyUp(KeyCode.Z))
         {
             currentMode = MoveMode.CHASE;
-            start = true;
         }
-        if (Input.GetKeyUp(KeyCode.W))
+        if (Input.GetKeyUp(KeyCode.X))
         {
             currentMode = MoveMode.SCATTER;
         }
-        if (Input.GetKeyUp(KeyCode.E))
+        if (Input.GetKeyUp(KeyCode.C))
         {
             currentMode = MoveMode.STOP;
+        }
+
+        switch (currentMode)
+        {
+            case MoveMode.STOP:
+                p.target = p.currentPos;
+                break;
+            case MoveMode.CHASE:
+                p.target = vm.playerPos;
+                break;
+            case MoveMode.SCATTER:
+                p.target = new Vector3(0, 0, 0);
+                break;
         }
     }
 }
