@@ -13,11 +13,17 @@ public class PlayerMovement : MonoBehaviour
     private float speed = 10;
 
     [SerializeField] private TurnPipes level;
+    private VariableManager vm;
+
+    void Start()
+    {
+        vm = FindObjectOfType<VariableManager>();
+    }
 
     void Update()
     {
-        FindObjectOfType<VariableManager>().speed = speed;
-        FindObjectOfType<VariableManager>().playerPos = transform.position;
+        vm.speed = speed;
+        vm.playerPos = transform.localPosition;
         Ray rayCheck = new Ray(transform.position, Vector3.zero); //Direction undetermined
         RaycastHit hit;
 
