@@ -84,7 +84,6 @@ public class PathFinderAI : MonoBehaviour
                     currentNode = nextNode;
                     move = false;
                 }
-                //transform.localPosition = currentPos;
             }
         }
         transform.localPosition = currentPos;
