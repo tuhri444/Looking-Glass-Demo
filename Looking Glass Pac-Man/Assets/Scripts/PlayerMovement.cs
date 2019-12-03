@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,16 +17,21 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField,Range(0f,10f)]
     private float speed = 10;
 
+    private VariableManager vm;
+
     [SerializeField] private TurnPipes level;
 
     void Start()
     {
+        vm = FindObjectOfType<VariableManager>();
         destination = transform.position;
         wakawaka = GetComponent<AudioSource>();
     }
 
     void Update()
     {
+        vm.playerPos = transform.localPosition;
+        vm.speed = speed;
         left = Input.GetAxis("Horizontal1") < 0 ? true : false;
         right = Input.GetAxis("Horizontal1") > 0 ? true : false;
         up = Input.GetAxis("Vertical1") < 0 ? true : false;
