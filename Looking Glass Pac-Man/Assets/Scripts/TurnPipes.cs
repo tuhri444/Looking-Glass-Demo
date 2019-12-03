@@ -109,20 +109,20 @@ public class TurnPipes : MonoBehaviour
             targetRotation = Quaternion.Euler(targetVector) * targetRotation;
             turning = true;
         }
-        if (up && !turning)
-        {
-            targetVector = (Vector3.right) * 90;
-            targetRotation = transform.rotation;
-            targetRotation = Quaternion.Euler(targetVector) * targetRotation;
-            turning = true;
-        }
-        if (down && !turning)
-        {
-            targetVector = (Vector3.right) * -90;
-            targetRotation = transform.rotation;
-            targetRotation = Quaternion.Euler(targetVector) * targetRotation;
-            turning = true;
-        }
+        //if (up && !turning)
+        //{
+        //    targetVector = (Vector3.right) * 90;
+        //    targetRotation = transform.rotation;
+        //    targetRotation = Quaternion.Euler(targetVector) * targetRotation;
+        //    turning = true;
+        //}
+        //if (down && !turning)
+        //{
+        //    targetVector = (Vector3.right) * -90;
+        //    targetRotation = transform.rotation;
+        //    targetRotation = Quaternion.Euler(targetVector) * targetRotation;
+        //    turning = true;
+        //}
 
         if (turning)
         {
