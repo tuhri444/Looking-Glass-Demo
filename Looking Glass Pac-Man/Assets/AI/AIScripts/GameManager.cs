@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            if (transform.GetChild(i).name.Contains("Pipe") || transform.GetChild(i).name.Contains("Cube"))
+            if (transform.GetChild(i).name.Contains("Pipe") || transform.GetChild(i).name.Contains("Cube")|| transform.GetChild(i).name.Contains("Teleporter"))
             {
                 children.Add(transform.GetChild(i));
                 Node node = new Node();
@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
             {
                 if (i != j)
                 {
-                    if (Vector3.Distance(nodes[i].Position, nodes[j].Position) <= 0.15f)
+                    if (Vector3.Distance(nodes[i].Position, nodes[j].Position) <= .17f)
                     {
                         nodes[i].add(nodes[j]);
                     }
@@ -57,35 +57,5 @@ public class GameManager : MonoBehaviour
                 Debug.DrawLine(n.Position, child.Position, Color.blue);
             }
         }
-    }
-}
-public class Node
-{
-    Vector3 position;
-    List<Node> connectionsToNodes = new List<Node>();
-    public float f = 0;//total cost
-    public float g = 0;//dist between current and start
-    public float h = 0;//dist between this and end
-    public Node() { }
-    public void add(Node n)
-    {
-        connectionsToNodes.Add(n);
-    }
-    public Vector3 Position
-    {
-        get
-        {
-            //position = new Vector3(position.x,0,position.z);
-            return position;
-        }
-        set { position = value; }
-    }
-    public List<Node> connectionsList
-    {
-        get { return connectionsToNodes; }
-    }
-    public int connections
-    {
-        get { return connectionsToNodes.Count; }
     }
 }

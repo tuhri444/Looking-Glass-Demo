@@ -5,16 +5,17 @@ using UnityEngine;
 public class PathFinderAI : MonoBehaviour
 {
     GameManager gm;
-    public Vector3 target;
-    public Vector3 currentPos;
-    [HideInInspector] public Vector3 startPos;
-    private float speed = 1;
-    float max = float.MaxValue;
-    Node currentNode;
-    Node previousNode;
+
+    public Vector3 startPos;
     public Vector3 previousPos;
-    Node nextNode;
+    public Vector3 currentPos;
     public Vector3 nextNodePos;
+    public Vector3 target;
+
+    Node previousNode;
+    public Node currentNode;
+    Node nextNode;
+
     Quaternion targetRotation;
     bool move = false;
     bool turning;
@@ -22,23 +23,27 @@ public class PathFinderAI : MonoBehaviour
     float counter = 0;
     float startCounter = 0;
     float turnSpeed;
+    float max = float.MaxValue;
+    float max2 = float.MaxValue;
+    private float speed = 1;
     private VariableManager vm;
-
+    
     void Start()
     {
         gm = transform.parent.GetComponent<GameManager>();
+        currentNode = FindMatch();
+        transform.localPosition = currentNode.Position;
         startPos = transform.localPosition;
-        currentNode = gm.nodes[0];
         currentPos = startPos;
         previousNode = currentNode;
         previousPos = currentPos;
         target = startPos;
         vm = FindObjectOfType<VariableManager>();
+
     }
 
     void Update()
     { 
-        //Debug.Log(gm.nodes[0].connections);
         if (Vector3.Distance(currentPos,target) > 0.08f)
         {
             if (!move)
@@ -46,8 +51,8 @@ public class PathFinderAI : MonoBehaviour
                 max = float.MaxValue;
                 for (int i = 0; i < currentNode.connections; i++)
                 {
-                    Debug.Log("Current Child" + currentNode.connectionsList[i].Position);
                     //Debug.Log("Previous Node" + previousPos);
+                    Debug.Log("CurrentNode Connections"+currentNode.connectionsList[0]);
                     if (currentNode.connectionsList[i] != previousNode)
                     {
                         Node child = currentNode.connectionsList[i];
@@ -56,7 +61,7 @@ public class PathFinderAI : MonoBehaviour
                         child.f = child.g + child.h;
                         if (child.f <= max)
                         {
-                            //Debug.Log("Found a Lowest");
+                            Debug.Log("Found a Lowest");
                             lowest = child;
                             max = lowest.f;
                         }
@@ -84,9 +89,23 @@ public class PathFinderAI : MonoBehaviour
                     currentNode = nextNode;
                     move = false;
                 }
-                //transform.localPosition = currentPos;
             }
         }
         transform.localPosition = currentPos;
+        
+    }
+
+    Node FindMatch()
+    {
+        Node least = null;
+        for(int i = 0; i<gm.nodes.Count;i++)
+        {
+            if(Vector3.Distance(gm.nodes[i].Position,transform.localPosition) < max2)
+            {
+                least = gm.nodes[i];
+                max2 = Vector3.Distance(gm.nodes[i].Position, transform.localPosition);
+            }
+        }
+        return least;
     }
 }
