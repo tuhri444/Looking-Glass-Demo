@@ -10,12 +10,11 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            if (transform.GetChild(i).name.Contains("Pipe") || transform.GetChild(i).name.Contains("Cube")|| transform.GetChild(i).name.Contains("Teleporter"))
+            if (transform.GetChild(i).GetComponent<Node>() != null)
             {
                 children.Add(transform.GetChild(i));
-                Node node = new Node();
-                node.Position = transform.GetChild(i).localPosition;
-                nodes.Add(node);
+                transform.GetChild(i).GetComponent<Node>().Position = transform.GetChild(i).localPosition;
+                nodes.Add(transform.GetChild(i).GetComponent<Node>());
             }
         }
         for (int i = 0; i < nodes.Count; i++)
