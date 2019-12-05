@@ -15,6 +15,6 @@ public class VariableManager : MonoBehaviour
     [HideInInspector]
     public Vector3 playerPos;
     [HideInInspector]
-    public bool startGhost = false;
+    public bool startGhost = true;
 
 }

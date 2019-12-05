@@ -21,10 +21,11 @@ public class Blinky : MonoBehaviour
         SCATTER,
         FREIGHTENED
     }
-    MoveMode currentMode;
+    public MoveMode currentMode;
     // Start is called before the first frame update
     void Start()
     {
+        currentMode = MoveMode.SCATTER;
         timer = Time.time;
         p = GetComponent<PathFinderAI>();
         vm = FindObjectOfType<VariableManager>();
@@ -43,11 +44,13 @@ public class Blinky : MonoBehaviour
                 {
                     timer = Time.time + chaseTime;
                     currentMode = MoveMode.CHASE;
+                    Debug.Log("Chasing");
                 }
                 else if (Time.time > timer && currentMode == MoveMode.CHASE)
                 {
                     timer = Time.time + scatterTime;
                     currentMode = MoveMode.SCATTER;
+                    Debug.Log("Scattering");
                     mode++;
                 }
             } else if(mode == 1)
@@ -56,12 +59,14 @@ public class Blinky : MonoBehaviour
                 {
                     timer = Time.time + chaseTime;
                     currentMode = MoveMode.CHASE;
+                    Debug.Log("Chasing");
                 }
                 else if (Time.time > timer && currentMode == MoveMode.CHASE)
                 {
                     scatterTime = 5;
                     timer = Time.time + scatterTime;
                     currentMode = MoveMode.SCATTER;
+                    Debug.Log("Scattering");
                     mode++;
                 }
             }
@@ -71,11 +76,13 @@ public class Blinky : MonoBehaviour
                 {
                     timer = Time.time + chaseTime;
                     currentMode = MoveMode.CHASE;
+                    Debug.Log("Chasing");
                 }
                 else if (Time.time > timer && currentMode == MoveMode.CHASE)
                 {
                     timer = Time.time + scatterTime;
                     currentMode = MoveMode.SCATTER;
+                    Debug.Log("Scattering");
                     mode++;
                 }
             }
@@ -86,6 +93,7 @@ public class Blinky : MonoBehaviour
                     chaseTime = float.MaxValue;
                     timer = Time.time + chaseTime;
                     currentMode = MoveMode.CHASE;
+                    Debug.Log("Chasing");
                 }
             }
         }

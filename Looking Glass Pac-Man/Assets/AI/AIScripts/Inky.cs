@@ -16,17 +16,18 @@ public class Inky : MonoBehaviour
     float mode = 0;
     bool started = false;
 
-    enum MoveMode
+    public enum MoveMode
     {
         STOP,
         CHASE,
         SCATTER,
         FREIGHTENED
     }
-    MoveMode currentMode;
+    public MoveMode currentMode;
     // Start is called before the first frame update
     void Start()
     {
+        currentMode = MoveMode.SCATTER;
         timer = Time.time;
         p = GetComponent<PathFinderAI>();
         vm = FindObjectOfType<VariableManager>();

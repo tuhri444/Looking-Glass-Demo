@@ -14,17 +14,18 @@ public class Clyde : MonoBehaviour
     float chaseTime = 20;
     float mode = 0;
     bool started = false;
-    enum MoveMode
+    public enum MoveMode
     {
         STOP,
         CHASE,
         SCATTER,
         FREIGHTENED
     }
-    MoveMode currentMode;
+    public MoveMode currentMode;
 
     void Start()
     {
+        currentMode = MoveMode.SCATTER;
         timer = Time.time;
         p = GetComponent<PathFinderAI>();
         vm = FindObjectOfType<VariableManager>();

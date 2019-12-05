@@ -15,14 +15,14 @@ public class Pinky : MonoBehaviour
     float mode = 0;
     bool started = false;
 
-    enum MoveMode
+    public enum MoveMode
     {
         STOP,
         CHASE,
         SCATTER,
         FREIGHTENED
     }
-    MoveMode currentMode;
+    public MoveMode currentMode;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +31,7 @@ public class Pinky : MonoBehaviour
         vm = FindObjectOfType<VariableManager>();
         gm = FindObjectOfType<GameManager>();
         pm = FindObjectOfType<PlayerMovement>();
+        currentMode = MoveMode.SCATTER;
     }
 
     // Update is called once per frame

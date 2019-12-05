@@ -20,7 +20,6 @@ public class Node : MonoBehaviour
     }
     public void add(Node n)
     {
-        Debug.Log("");
         connectionsToNodes.Add(n);
         connectionsToGameObjects.Add(n.pipe);
     }

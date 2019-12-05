@@ -44,7 +44,26 @@ public class PathFinderAI : MonoBehaviour
 
     void Update()
     {
-        target = FindMatch(target).Position;
+        switch (gameObject.name)
+        {
+            case "Blinky":
+                Blinky b = GetComponent<Blinky>();
+                target = b.currentMode ==Blinky.MoveMode.SCATTER? target:FindMatch(target).Position;
+                break;
+            case "Pinky":
+                Pinky p = GetComponent<Pinky>();
+                target = p.currentMode == Pinky.MoveMode.SCATTER ? target : FindMatch(target).Position;
+                break;
+            case "Inky":
+                Inky I = GetComponent<Inky>();
+                target = I.currentMode == Inky.MoveMode.SCATTER ? target : FindMatch(target).Position;
+                break;
+            case "Clyde":
+                Clyde C = GetComponent<Clyde>();
+                target = C.currentMode == Clyde.MoveMode.SCATTER ? target : FindMatch(target).Position;
+                break;
+
+        }
         if (Vector3.Distance(currentPos,target) > 0.08f)
         {
             if (!move)
@@ -53,7 +72,7 @@ public class PathFinderAI : MonoBehaviour
                 for (int i = 0; i < currentNode.connections; i++)
                 {
                     //Debug.Log("Previous Node" + previousPos);
-                    Debug.Log("CurrentNode Connections"+currentNode.connectionsList[0]);
+                    //Debug.Log("CurrentNode Connections"+currentNode.connectionsList[0]);
                     if (currentNode.connectionsList[i] != previousNode)
                     {
                         Node child = currentNode.connectionsList[i];
@@ -62,7 +81,7 @@ public class PathFinderAI : MonoBehaviour
                         child.f = child.g + child.h;
                         if (child.f <= max)
                         {
-                            Debug.Log("Found a Lowest");
+                            //Debug.Log("Found a Lowest");
                             lowest = child;
                             max = lowest.f;
                         }
