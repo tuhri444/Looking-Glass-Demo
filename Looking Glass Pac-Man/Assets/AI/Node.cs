@@ -11,6 +11,7 @@ public class Node : MonoBehaviour
     public float g = 0;//dist between current and start
     public float h = 0;//dist between this and end
     public GameObject pipe;
+    [SerializeField]GameObject occupant;
     public Node() { }
     private void Start()
     {
@@ -43,6 +44,29 @@ public class Node : MonoBehaviour
     public Node node
     {
         get { return thisNode; }
+    }
+    public GameObject Occupant
+    {
+        get { return occupant; }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+
+        if(other.gameObject.GetComponent<PathFinderAI>() != null)
+        {
+            //Debug.Log("Occupied");
+            occupant = other.gameObject;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+
+        if (other.gameObject.GetComponent<PathFinderAI>() != null)
+        {
+            //Debug.Log("Unoccupied");
+            occupant = null;
+        }
     }
 }
 

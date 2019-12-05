@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PathFinderAI : MonoBehaviour
 {
@@ -27,7 +25,15 @@ public class PathFinderAI : MonoBehaviour
     float max2 = float.MaxValue;
     private float speed = 1;
     private VariableManager vm;
-    
+
+    public enum MoveMode
+    {
+        STOP,
+        CHASE,
+        SCATTER,
+        FREIGHTENED
+    }
+
     void Start()
     {
         gm = transform.parent.GetComponent<GameManager>();
@@ -48,23 +54,23 @@ public class PathFinderAI : MonoBehaviour
         {
             case "Blinky":
                 Blinky b = GetComponent<Blinky>();
-                target = b.currentMode ==Blinky.MoveMode.SCATTER? target:FindMatch(target).Position;
+                target = b.currentMode == MoveMode.SCATTER ? target : FindMatch(target).Position;
                 break;
             case "Pinky":
                 Pinky p = GetComponent<Pinky>();
-                target = p.currentMode == Pinky.MoveMode.SCATTER ? target : FindMatch(target).Position;
+                target = p.currentMode == MoveMode.SCATTER ? target : FindMatch(target).Position;
                 break;
             case "Inky":
                 Inky I = GetComponent<Inky>();
-                target = I.currentMode == Inky.MoveMode.SCATTER ? target : FindMatch(target).Position;
+                target = I.currentMode == MoveMode.SCATTER ? target : FindMatch(target).Position;
                 break;
             case "Clyde":
                 Clyde C = GetComponent<Clyde>();
-                target = C.currentMode == Clyde.MoveMode.SCATTER ? target : FindMatch(target).Position;
+                target = C.currentMode == MoveMode.SCATTER ? target : FindMatch(target).Position;
                 break;
 
         }
-        if (Vector3.Distance(currentPos,target) > 0.08f)
+        if (Vector3.Distance(currentPos, target) > 0.08f)
         {
             if (!move)
             {
@@ -73,7 +79,7 @@ public class PathFinderAI : MonoBehaviour
                 {
                     //Debug.Log("Previous Node" + previousPos);
                     //Debug.Log("CurrentNode Connections"+currentNode.connectionsList[0]);
-                    if (currentNode.connectionsList[i] != previousNode)
+                    if (currentNode.connectionsList[i] != previousNode && currentNode.connectionsList[i].Occupant == null)
                     {
                         Node child = currentNode.connectionsList[i];
                         child.g = currentNode.g + Vector3.Distance(currentNode.Position, child.Position);
@@ -87,12 +93,14 @@ public class PathFinderAI : MonoBehaviour
                         }
                     }
                 }
-
-                nextNode = lowest;
-                nextNodePos = lowest.Position;
+                if (lowest != null)
+                {
+                    nextNode = lowest;
+                    nextNodePos = lowest.Position;
+                }
                 move = true;
             }
-            else if (move && !vm.turning)
+            else if (move && !vm.turning && nextNode != null)
             {
                 if (counter < 1)
                 {
@@ -112,16 +120,16 @@ public class PathFinderAI : MonoBehaviour
             }
         }
         transform.localPosition = currentPos;
-        
+
     }
 
     Node FindMatch()
     {
         Node least = null;
         max2 = float.MaxValue;
-        for (int i = 0; i<gm.nodes.Count;i++)
+        for (int i = 0; i < gm.nodes.Count; i++)
         {
-            if(Vector3.Distance(gm.nodes[i].Position,transform.localPosition) < max2)
+            if (Vector3.Distance(gm.nodes[i].Position, transform.localPosition) < max2)
             {
                 least = gm.nodes[i];
                 max2 = Vector3.Distance(gm.nodes[i].Position, transform.localPosition);
@@ -135,7 +143,7 @@ public class PathFinderAI : MonoBehaviour
         max2 = float.MaxValue;
         for (int i = 0; i < gm.nodes.Count; i++)
         {
-            if (Vector3.Distance(gm.nodes[i].Position,pos) < max2)
+            if (Vector3.Distance(gm.nodes[i].Position, pos) < max2)
             {
                 least = gm.nodes[i];
                 max2 = Vector3.Distance(gm.nodes[i].Position, pos);

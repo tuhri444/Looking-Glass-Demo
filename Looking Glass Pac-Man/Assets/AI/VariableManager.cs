@@ -17,7 +17,8 @@ public class VariableManager : MonoBehaviour
     public Vector3 playerPos;
     [SerializeField] private int Score;
     public int health = 3;
-
+    [SerializeField]
+    public PathFinderAI.MoveMode moveMode = PathFinderAI.MoveMode.SCATTER;
     public bool startGhost;
     private static VariableManager instance;
     public bool gotHit;

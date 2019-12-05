@@ -12,112 +12,162 @@ public class Pinky : MonoBehaviour
     float timer = 0;
     float scatterTime = 7;
     float chaseTime = 20;
-    float mode = 0;
+    int mode = 0;
+    [SerializeField] private float animationSpeed;
+    private int index;
+    private float timePassed;
+    private float totalTimePassed;
     bool started = false;
-
-    public enum MoveMode
-    {
-        STOP,
-        CHASE,
-        SCATTER,
-        FREIGHTENED
-    }
-    public MoveMode currentMode;
+    public PathFinderAI.MoveMode currentMode;
     // Start is called before the first frame update
     void Start()
     {
-        timer = Time.time;
+
         p = GetComponent<PathFinderAI>();
         vm = FindObjectOfType<VariableManager>();
         gm = FindObjectOfType<GameManager>();
         pm = FindObjectOfType<PlayerMovement>();
-        currentMode = MoveMode.SCATTER;
+        currentMode = PathFinderAI.MoveMode.SCATTER;
+        timer = Time.time + scatterTime;
     }
 
     // Update is called once per frame
     void Update()
     {
-        started = vm.startGhost;
-        if (started)
+        if (vm.moveMode == PathFinderAI.MoveMode.FREIGHTENED)
         {
-            if (mode == 0)
+            currentMode = vm.moveMode;
+        }
+        if (currentMode == PathFinderAI.MoveMode.FREIGHTENED)
+        {
+            timePassed += Time.deltaTime;
+            totalTimePassed += timePassed;
+            if (totalTimePassed > 5)
             {
-                if (Time.time > timer && currentMode == MoveMode.SCATTER)
-                {
-                    timer = Time.time + chaseTime;
-                    currentMode = MoveMode.CHASE;
-                }
-                else if (Time.time > timer && currentMode == MoveMode.CHASE)
-                {
-                    timer = Time.time + scatterTime;
-                    currentMode = MoveMode.SCATTER;
-                    mode++;
-                }
+                currentMode = PathFinderAI.MoveMode.SCATTER;
             }
-            else if (mode == 1)
+            if (timePassed >= animationSpeed)
             {
-                if (Time.time > timer && currentMode == MoveMode.SCATTER)
-                {
-                    timer = Time.time + chaseTime;
-                    currentMode = MoveMode.CHASE;
-                }
-                else if (Time.time > timer && currentMode == MoveMode.CHASE)
-                {
-                    scatterTime = 5;
-                    timer = Time.time + scatterTime;
-                    currentMode = MoveMode.SCATTER;
-                    mode++;
-                }
+                if (index == 1) index = 0;
+                else index++;
+                timePassed = 0;
             }
-            else if (mode == 2)
+
+            switch (index)
             {
-                if (Time.time > timer && currentMode == MoveMode.SCATTER)
-                {
-                    timer = Time.time + chaseTime;
-                    currentMode = MoveMode.CHASE;
-                }
-                else if (Time.time > timer && currentMode == MoveMode.CHASE)
-                {
-                    timer = Time.time + scatterTime;
-                    currentMode = MoveMode.SCATTER;
-                    mode++;
-                }
+                case 0:
+                    transform.GetChild(0).gameObject.SetActive(true);
+                    transform.GetChild(1).gameObject.SetActive(false);
+                    break;
+                case 1:
+                    transform.GetChild(0).gameObject.SetActive(false);
+                    transform.GetChild(1).gameObject.SetActive(true);
+                    break;
             }
-            else if (mode == 2)
+        }
+        else
+        {
+            transform.GetChild(0).gameObject.SetActive(true);
+            transform.GetChild(1).gameObject.SetActive(false);
+        }
+
+        started = vm.startGhost;
+        if (currentMode != PathFinderAI.MoveMode.FREIGHTENED)
+        {
             {
-                if (Time.time > timer && currentMode == MoveMode.SCATTER)
+                if (started)
                 {
-                    chaseTime = float.MaxValue;
-                    timer = Time.time + chaseTime;
-                    currentMode = MoveMode.CHASE;
+                    //Debug.Log("started");
+                    if (mode == 0)
+                    {
+                        if (Time.time > timer && currentMode == PathFinderAI.MoveMode.SCATTER)
+                        {
+                            timer = Time.time + chaseTime;
+                            currentMode = PathFinderAI.MoveMode.CHASE;
+                            Debug.Log(gameObject.name + "Chasing");
+                        }
+                        else if (Time.time > timer && currentMode == PathFinderAI.MoveMode.CHASE)
+                        {
+                            timer = Time.time + scatterTime;
+                            currentMode = PathFinderAI.MoveMode.SCATTER;
+                            Debug.Log(gameObject.name + "Scattering");
+                            mode++;
+                        }
+                    }
+                    else if (mode == 1)
+                    {
+                        if (Time.time > timer && currentMode == PathFinderAI.MoveMode.SCATTER)
+                        {
+                            timer = Time.time + chaseTime;
+                            currentMode = PathFinderAI.MoveMode.CHASE;
+                            Debug.Log(gameObject.name + "Chasing");
+                        }
+                        else if (Time.time > timer && currentMode == PathFinderAI.MoveMode.CHASE)
+                        {
+                            scatterTime = 5;
+                            timer = Time.time + scatterTime;
+                            currentMode = PathFinderAI.MoveMode.SCATTER;
+                            Debug.Log(gameObject.name + "Scattering");
+                            mode++;
+                        }
+                    }
+                    else if (mode == 2)
+                    {
+                        if (Time.time > timer && currentMode == PathFinderAI.MoveMode.SCATTER)
+                        {
+                            timer = Time.time + chaseTime;
+                            currentMode = PathFinderAI.MoveMode.CHASE;
+                            Debug.Log(gameObject.name + "Chasing");
+                        }
+                        else if (Time.time > timer && currentMode == PathFinderAI.MoveMode.CHASE)
+                        {
+                            timer = Time.time + scatterTime;
+                            currentMode = PathFinderAI.MoveMode.SCATTER;
+                            Debug.Log(gameObject.name + "Scattering");
+                            mode++;
+                        }
+                    }
+                    else if (mode == 2)
+                    {
+                        if (Time.time > timer && currentMode == PathFinderAI.MoveMode.SCATTER)
+                        {
+                            chaseTime = float.MaxValue;
+                            timer = Time.time + chaseTime;
+                            currentMode = PathFinderAI.MoveMode.CHASE;
+                            Debug.Log(gameObject.name + "Chasing");
+                        }
+                    }
                 }
             }
         }
+
         if (Input.GetKeyUp(KeyCode.C))
         {
-            currentMode = MoveMode.STOP;
+            currentMode = PathFinderAI.MoveMode.STOP;
         }
 
         switch (currentMode)
         {
-            case MoveMode.STOP:
+            case PathFinderAI.MoveMode.STOP:
                 p.target = p.currentPos;
                 break;
-            case MoveMode.CHASE:
+            case PathFinderAI.MoveMode.CHASE:
                 p.target = pm.transform.forward*2;
                 break;
-            case MoveMode.SCATTER:
-                p.target = new Vector3(-0.314f, 0.4297617f, -0.307f);
+            case PathFinderAI.MoveMode.SCATTER:
+                p.target = new Vector3(0.2824f, -0.4297617f, 0.29f);
                 break;
-            case MoveMode.FREIGHTENED:
+            case PathFinderAI.MoveMode.FREIGHTENED:
                 p.target = gm.nodes[Random.Range(0, gm.nodes.Count - 1)].Position;
                 break;
         }
     }
-    void OnTriggerEnter()
+    void OnTriggerEnter(Collider other)
     {
-        if (!vm.gotHit)
+        Debug.Log("Hit");
+        if (!vm.gotHit && other.name == "Player" && currentMode != PathFinderAI.MoveMode.FREIGHTENED)
         {
+
             vm.gotHit = true;
             vm.health -= 1;
         }
