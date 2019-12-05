@@ -15,10 +15,13 @@ public class TurnPipes : MonoBehaviour
     private bool right;
     private bool up;
     private bool down;
+    private VariableManager vm;
 
     void Start()
     {
         targetRotation = new Quaternion();
+        vm = FindObjectOfType<VariableManager>();
+        vm.gotHit = false;
     }
 
 

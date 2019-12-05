@@ -122,12 +122,12 @@ public class Blinky : MonoBehaviour
 
     }
 
-    void OnTriggerEnter()
+    void OnTriggerEnter(Collider other)
     {
         if (!vm.gotHit)
         {
-            vm.gotHit = true;
-            vm.health -= 1;
+            other.GetComponent<SphereCollider>().enabled = false;
+            vm.Damage(1);
         }
     }
 }

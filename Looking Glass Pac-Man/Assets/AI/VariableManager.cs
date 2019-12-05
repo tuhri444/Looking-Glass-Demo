@@ -48,4 +48,14 @@ public class VariableManager : MonoBehaviour
     {
         Score += scoreToAdd;
     }
+
+    public int GetScore()
+    {
+        return Score;
+    }
+
+    public void Damage(int amount)
+    {
+        health -= amount;
+    }
 }

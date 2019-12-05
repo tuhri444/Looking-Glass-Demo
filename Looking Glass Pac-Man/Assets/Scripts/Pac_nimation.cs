@@ -22,6 +22,7 @@ public class Pac_nimation : MonoBehaviour
     void Start()
     {
         vm = FindObjectOfType<VariableManager>();
+        vm.gotHit = false;
         gm = FindObjectOfType<TurnPipes>();
         currentHP = vm.health;
         movementInfo = GetComponent<PlayerMovement>();
@@ -33,7 +34,7 @@ public class Pac_nimation : MonoBehaviour
         {
             gm.turning = true;
             vm.gotHit = false;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene("GameScene");
         }
         if (vm.health < currentHP)
         {

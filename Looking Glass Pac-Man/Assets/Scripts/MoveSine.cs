@@ -10,9 +10,9 @@ public class MoveSine : MonoBehaviour
     public bool active = false;
 
     private Vector3 newPosition;
-    private Vector3 origin;
+    public Vector3 origin;
 
-    void Start()
+    void Awake()
     {
         origin = transform.position;
     }

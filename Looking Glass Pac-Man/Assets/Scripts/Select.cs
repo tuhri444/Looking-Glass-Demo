@@ -1,65 +1,87 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Select : MonoBehaviour
 {
     [SerializeField] private GameObject startItem;
 
     [SerializeField] GameObject cursor;
-    List<GameObject> UIItems = new List<GameObject>();
+    [SerializeField] List<GameObject> UIItems;
     [SerializeField] private Vector3 startPosition;
     GameObject selected;
-    [SerializeField] private int menuItems;
+    private int index;
 
-
-    float delay = .5f;
+    [SerializeField] float delay = .5f;
     float timer = 0;
-    bool wait = false;
+    [SerializeField] bool wait = false;
 
     void Start()
     {
-        UIItems.Add(transform.GetChild(0).gameObject);
-        UIItems.Add(transform.GetChild(1).gameObject);
-        UIItems.Add(transform.GetChild(2).gameObject);
-        menuItems = 0;
-        startPosition = UIItems[menuItems].transform.Find("CursorPos").position;
-        selected = UIItems[menuItems];
+        index = 0;
+        startPosition = cursor.transform.position;
+        selected = UIItems[0];
         timer = Time.time + delay;
     }
 
     void Update()
     {
-        if (Input.GetAxis("Vertical") > 0 && !wait)
+        if (Input.GetAxis("A") > 0)
         {
-            Debug.Log("Selection Change");
-            menuItems--;
-            if (menuItems < 0)
+            switch (index)
             {
-                menuItems = UIItems.Count-1;
+                case 0:
+                    SceneManager.LoadScene("GameScene");
+                    break;
+                case 1:
+                    SceneManager.LoadScene("LeaderboardScene");
+                    break;
+                case 2:
+                    Application.Quit();
+                    break;
+            }
+        }
+
+
+
+        if (wait)
+        {
+            timer += Time.deltaTime;
+        }
+
+        if (Input.GetAxis("Vertical1") < 0 && !wait)
+        {
+            Debug.Log("test");
+            index--;
+            if (index < 0)
+            {
+                index = UIItems.Count-1;
             }
             wait = true;
         }
-        if (Input.GetAxis("Vertical") < 0 && !wait)
+        if (Input.GetAxis("Vertical1") > 0 && !wait)
         {
-            Debug.Log("Selection Change");
-            menuItems++;
-            if (menuItems >= UIItems.Count)
+            index++;
+            if (index >= UIItems.Count)
             {
-                menuItems = 0;
+                index = 0;
             }
             wait = true;
         }
 
-        if (Time.time > timer && wait)
+        if (timer > delay)
         {
-            Debug.Log("Change Timer");
             wait = false;
-            timer = Time.time + delay;
+            timer = 0;
         }
 
         selected.GetComponent<MoveSine>().active = false;
-        selected = UIItems[menuItems];
+        selected = UIItems[index];
         selected.GetComponent<MoveSine>().active = true;
-        cursor.transform.position = UIItems[menuItems].transform.Find("CursorPos").position;
+        if (index == 0)
+            cursor.transform.position = startPosition;
+        else
+            cursor.transform.position = new Vector3(cursor.transform.position.x,UIItems[index].GetComponent<MoveSine>().origin.y, cursor.transform.position.z);
     }
 }
