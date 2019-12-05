@@ -4,7 +4,11 @@ using UnityEngine;
 public class Node : MonoBehaviour
 {
     Vector3 position;
+<<<<<<< HEAD
     [SerializeField]List<Node> connectionsToNodes = new List<Node>();
+=======
+    [SerializeField]public List<Node> connectionsToNodes = new List<Node>();
+>>>>>>> 95918d362b438326d0c9d702e7d0384254200e1a
     Node thisNode;
     [SerializeField] List<GameObject> connectionsToGameObjects = new List<GameObject>();
     public float f = 0;//total cost

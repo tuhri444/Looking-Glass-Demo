@@ -14,6 +14,10 @@ public class Blinky : MonoBehaviour
     float mode = 0;
     bool started = false;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 95918d362b438326d0c9d702e7d0384254200e1a
     public enum MoveMode
     {
         STOP,
@@ -119,5 +123,14 @@ public class Blinky : MonoBehaviour
                 break;
         }
 
+    }
+
+    void OnTriggerEnter()
+    {
+        if (!vm.gotHit)
+        {
+            vm.gotHit = true;
+            vm.health -= 1;
+        }
     }
 }

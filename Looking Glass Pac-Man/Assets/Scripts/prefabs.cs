@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class prefabs : MonoBehaviour
 {
-    [SerializeField] public GameObject PipePrefab;
     [SerializeField] public GameObject teleportPrefab;
-    [Range(0,10)][SerializeField] public float view;
+    [Range(0,15)][SerializeField] public float view;
     [SerializeField] public GameObject PelletPrefab;
+    [SerializeField] public List<GameObject> FruitPrefabs;
+    [SerializeField] public List<GameObject> PipePrefabs;
 }

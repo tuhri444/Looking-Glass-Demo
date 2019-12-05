@@ -10,10 +10,13 @@ public class Dissolve : MonoBehaviour
     private MeshRenderer mesh;
     private PlayerMovement playerScript;
     private Transform player;
+    private VariableManager vm;
+    [SerializeField] private int scoreToGive;
 
-    void Start()
+    void Awake()
     {
         pipeManager = FindObjectOfType<prefabs>();
+        vm = FindObjectOfType<VariableManager>();
         if (pipeManager != null)
             deathSound = pipeManager.GetComponent<AudioSource>();
         else
@@ -41,8 +44,7 @@ public class Dissolve : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            //if (pipeManager != null)
-            //    deathSound.Play();
+            vm.AddScore(scoreToGive);
             Destroy(transform.gameObject);
         }
     }

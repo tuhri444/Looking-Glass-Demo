@@ -12,7 +12,11 @@ public class Clyde : MonoBehaviour
     float timer = 0;
     float scatterTime = 7;
     float chaseTime = 20;
+<<<<<<< HEAD
     float mode = 0;
+=======
+    int mode = 0;
+>>>>>>> 95918d362b438326d0c9d702e7d0384254200e1a
     bool started = false;
     public enum MoveMode
     {
@@ -38,12 +42,23 @@ public class Clyde : MonoBehaviour
         started = vm.startGhost;
         if (started)
         {
+<<<<<<< HEAD
             if (mode == 0)
             {
+=======
+            Debug.Log("started");
+            if (mode == 0)
+            {
+                Debug.Log("mode 0");
+>>>>>>> 95918d362b438326d0c9d702e7d0384254200e1a
                 if (Time.time > timer && currentMode == MoveMode.SCATTER)
                 {
                     timer = Time.time + chaseTime;
                     currentMode = MoveMode.CHASE;
+<<<<<<< HEAD
+=======
+                    Debug.Log("KILL ME");
+>>>>>>> 95918d362b438326d0c9d702e7d0384254200e1a
                 }
                 else if (Time.time > timer && currentMode == MoveMode.CHASE)
                 {
@@ -119,5 +134,12 @@ public class Clyde : MonoBehaviour
                 break;
         }
     }
-
+    void OnTriggerEnter()
+    {
+        if (!vm.gotHit)
+        {
+            vm.gotHit = true;
+            vm.health -= 1;
+        }
+    }
 }

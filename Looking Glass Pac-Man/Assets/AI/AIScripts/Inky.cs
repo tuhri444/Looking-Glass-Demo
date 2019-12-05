@@ -118,4 +118,12 @@ public class Inky : MonoBehaviour
                 break;
         }
     }
+    void OnTriggerEnter()
+    {
+        if (!vm.gotHit)
+        {
+            vm.gotHit = true;
+            vm.health -= 1;
+        }
+    }
 }

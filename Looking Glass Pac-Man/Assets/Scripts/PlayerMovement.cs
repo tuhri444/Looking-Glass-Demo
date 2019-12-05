@@ -6,13 +6,14 @@ using UnityEngine.UI;
 public class PlayerMovement : MonoBehaviour
 {
     private Vector3 targetVector;
-    private Vector3 destination;
-    private bool destinationReached;
+    [SerializeField] private Vector3 destination;
+    [SerializeField] public bool destinationReached;
     private bool left;
     private bool right;
     private bool up;
     private bool down;
     private AudioSource wakawaka;
+
 
     [SerializeField,Range(0f,10f)]
     private float speed = 10;
@@ -43,28 +44,28 @@ public class PlayerMovement : MonoBehaviour
         if (left)
         {
             rayCheck.direction = Vector3.left;
-            if (Physics.Raycast(rayCheck, out hit, 1f))
+            if (Physics.Raycast(rayCheck, out hit, 1.2f))
                 transform.rotation = Quaternion.Euler(Vector3.down * 90);
         }
 
         if (right)
         {
             rayCheck.direction = Vector3.right;
-            if (Physics.Raycast(rayCheck, out hit, 1f))
+            if (Physics.Raycast(rayCheck, out hit, 1.2f))
                 transform.rotation = Quaternion.Euler(Vector3.up * 90);
         }
 
         if (up)
         {
             rayCheck.direction = Vector3.up;
-            if (Physics.Raycast(rayCheck, out hit, 1f))
+            if (Physics.Raycast(rayCheck, out hit, 1.2f))
                 transform.rotation = Quaternion.Euler(Vector3.left * 90);
         }
 
         if (down)
         {
             rayCheck.direction = Vector3.down;
-            if (Physics.Raycast(rayCheck, out hit, 1f))
+            if (Physics.Raycast(rayCheck, out hit, 1.2f))
                 transform.rotation = Quaternion.Euler(Vector3.right * 90);
         }
 
@@ -74,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
         if (!level.turning)
         {
             Ray ray = new Ray(transform.position, transform.forward);
-            if (Physics.Raycast(ray, out hit, 1f))
+            if (Physics.Raycast(ray, out hit, 1.2f))
             {
                 destination = hit.transform.position;
             }
@@ -84,8 +85,6 @@ public class PlayerMovement : MonoBehaviour
         {
             destination = transform.position;
         }
-
-        
 
         if (destinationReached == false)
         {
@@ -99,4 +98,5 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+
 }
