@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 public class AddCube : MonoBehaviour
@@ -20,12 +22,27 @@ public class AddCube : MonoBehaviour
         pellet.transform.parent = transform;
     }
 
+#if UNITY_EDITOR
     public void createCube(Vector3 pLocation, Quaternion pRotation, GameObject prefab)
     {
         GameObject newPipe = Instantiate(prefab, new Vector3(0,0,0), pRotation);
+        Undo.RegisterCreatedObjectUndo(newPipe,"Created cube");
         newPipe.transform.parent = FindObjectOfType<TurnPipes>().transform;
         newPipe.transform.position = pLocation;
+        Selection.activeGameObject = newPipe;
     }
+
+    public void SwapCube(GameObject prefab)
+    {
+        GameObject newPipe = Instantiate(prefab, transform.position,Quaternion.identity);
+        Undo.RegisterCreatedObjectUndo(newPipe,"Created cube");
+        newPipe.transform.parent = FindObjectOfType<TurnPipes>().transform;
+        Selection.activeGameObject = newPipe;
+        Undo.DestroyObjectImmediate(gameObject);
+
+
+    }
+#endif
 
     void Update()
     {
