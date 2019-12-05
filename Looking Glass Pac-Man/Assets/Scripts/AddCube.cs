@@ -11,6 +11,7 @@ public class AddCube : MonoBehaviour
     private PlayerMovement playerScript;
     private Transform player;
     private prefabs prefabs;
+    private Node nodeSelf;
 
     void Start()
     {
@@ -18,8 +19,19 @@ public class AddCube : MonoBehaviour
         mesh = GetComponent<MeshRenderer>();
         playerScript = FindObjectOfType<PlayerMovement>();
         player = playerScript.GetComponent<Transform>();
-        GameObject pellet = Instantiate(prefabs.PelletPrefab, transform.position, Quaternion.identity);
-        pellet.transform.parent = transform;
+        nodeSelf = GetComponent<Node>();
+        if (nodeSelf.connectionsToNodes.Count == 3)
+        {
+            GameObject fruit = Instantiate(prefabs.FruitPrefabs[Random.Range(0, prefabs.FruitPrefabs.Count - 1)],
+                transform.position, Quaternion.identity);
+            fruit.transform.parent = transform;
+        }
+        else
+        {
+            GameObject pellet = Instantiate(prefabs.PelletPrefab, transform.position, Quaternion.identity);
+            pellet.transform.parent = transform;
+
+        }
     }
 
 #if UNITY_EDITOR

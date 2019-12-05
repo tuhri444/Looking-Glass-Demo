@@ -7,6 +7,7 @@ public class MoveSine : MonoBehaviour
     private float newY;
     [SerializeField] private float amplitude;
     [SerializeField] private float frequency;
+    public bool active = false;
 
     private Vector3 newPosition;
     private Vector3 origin;
@@ -18,9 +19,15 @@ public class MoveSine : MonoBehaviour
 
     void Update()
     {
-        newY = origin.y + amplitude * Mathf.Sin(Time.time * frequency);
-        newPosition = transform.position;
-        newPosition.y = newY;
-        transform.position = newPosition;
+        if (active)
+        {
+            newY = origin.y + amplitude * Mathf.Sin(Time.time * frequency);
+            newPosition = transform.position;
+            newPosition.y = newY;
+            transform.position = newPosition;
+        } else 
+        {
+            transform.position = origin;
+        }
     }
 }

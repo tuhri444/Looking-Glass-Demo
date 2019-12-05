@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class VariableManager : MonoBehaviour
 {
@@ -14,16 +15,37 @@ public class VariableManager : MonoBehaviour
     public float turnSpeed = 10;
     [HideInInspector]
     public Vector3 playerPos;
+    [SerializeField] private int Score;
+    public int health = 3;
 
-    // Start is called before the first frame update
-    void Start()
+    public bool startGhost;
+    private static VariableManager instance;
+    public bool gotHit;
+
+    void Awake()
     {
-        
+        startGhost = true;
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(this.gameObject);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (health <= 0)
+        {
+            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene("EndScene");
+            health = 3;
+        }
+    }
+
+    public void AddScore(int scoreToAdd)
+    {
+        Score += scoreToAdd;
     }
 }

@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 6223466487660884751}
   - component: {fileID: 8000004734820880843}
   - component: {fileID: 5392193855749400880}
+  - component: {fileID: 4276427797298197156}
+  - component: {fileID: 5836348142676637669}
   m_Layer: 0
   m_Name: orange
   m_TagString: Untagged
@@ -26,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4118253470751858557}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.69, y: 0, z: 0}
+  m_LocalPosition: {x: 0.2, y: -5.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7033468528408716078}
@@ -78,6 +80,32 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &4276427797298197156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4118253470751858557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9501ca0306ce663439f0f887adcb5132, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreToGive: 50
+--- !u!65 &5836348142676637669
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4118253470751858557}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 16, y: 16, z: 16}
+  m_Center: {x: 0.0000076293945, y: 7.999999, z: 0}
 --- !u!1 &6323264452517302589
 GameObject:
   m_ObjectHideFlags: 0

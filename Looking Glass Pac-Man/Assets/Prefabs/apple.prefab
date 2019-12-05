@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 8928884613832167664}
   - component: {fileID: 3508583889919769360}
   - component: {fileID: 7768692466835436567}
+  - component: {fileID: 6829105580600309405}
+  - component: {fileID: 93626413309369467}
   m_Layer: 0
   m_Name: apple
   m_TagString: Untagged
@@ -26,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 563647575930154379}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: -6.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1923362363387424574}
@@ -78,6 +80,32 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &6829105580600309405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 563647575930154379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9501ca0306ce663439f0f887adcb5132, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreToGive: 50
+--- !u!65 &93626413309369467
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 563647575930154379}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 15.999999, y: 15.999999, z: 13.999999}
+  m_Center: {x: 0, y: 7.9999995, z: 0}
 --- !u!1 &3236538069314624813
 GameObject:
   m_ObjectHideFlags: 0

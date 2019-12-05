@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private bool down;
     private AudioSource wakawaka;
 
+
     [SerializeField,Range(0f,10f)]
     private float speed = 10;
 
@@ -97,4 +98,5 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+
 }
