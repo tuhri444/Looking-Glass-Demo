@@ -30,16 +30,6 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        //int count = 0;
-
-        //for (int i = 0; i < transform.childCount; i++)
-        //{
-        //    //if (transform.GetChild(i).name.Contains("Pipe") || transform.GetChild(i).name.Contains("Cube"))
-        //    //{
-        //        count++;
-        //    //}
-        //}
-        //Debug.Log(count);
     }
 
     void Update()

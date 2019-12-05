@@ -43,7 +43,8 @@ public class PathFinderAI : MonoBehaviour
     }
 
     void Update()
-    { 
+    {
+        target = FindMatch(target).Position;
         if (Vector3.Distance(currentPos,target) > 0.08f)
         {
             if (!move)
@@ -98,12 +99,27 @@ public class PathFinderAI : MonoBehaviour
     Node FindMatch()
     {
         Node least = null;
-        for(int i = 0; i<gm.nodes.Count;i++)
+        max2 = float.MaxValue;
+        for (int i = 0; i<gm.nodes.Count;i++)
         {
             if(Vector3.Distance(gm.nodes[i].Position,transform.localPosition) < max2)
             {
                 least = gm.nodes[i];
                 max2 = Vector3.Distance(gm.nodes[i].Position, transform.localPosition);
+            }
+        }
+        return least;
+    }
+    Node FindMatch(Vector3 pos)
+    {
+        Node least = null;
+        max2 = float.MaxValue;
+        for (int i = 0; i < gm.nodes.Count; i++)
+        {
+            if (Vector3.Distance(gm.nodes[i].Position,pos) < max2)
+            {
+                least = gm.nodes[i];
+                max2 = Vector3.Distance(gm.nodes[i].Position, pos);
             }
         }
         return least;

@@ -14,16 +14,7 @@ public class VariableManager : MonoBehaviour
     public float turnSpeed = 10;
     [HideInInspector]
     public Vector3 playerPos;
+    [HideInInspector]
+    public bool startGhost = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

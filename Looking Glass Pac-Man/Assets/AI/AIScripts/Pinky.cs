@@ -6,6 +6,14 @@ public class Pinky : MonoBehaviour
 {
     PathFinderAI p;
     VariableManager vm;
+    GameManager gm;
+    PlayerMovement pm;
+
+    float timer = 0;
+    float scatterTime = 7;
+    float chaseTime = 20;
+    float mode = 0;
+    bool started = false;
 
     enum MoveMode
     {
@@ -18,20 +26,71 @@ public class Pinky : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        timer = Time.time;
         p = GetComponent<PathFinderAI>();
         vm = FindObjectOfType<VariableManager>();
+        gm = FindObjectOfType<GameManager>();
+        pm = FindObjectOfType<PlayerMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Z))
+        started = vm.startGhost;
+        if (started)
         {
-            currentMode = MoveMode.CHASE;
-        }
-        if (Input.GetKeyUp(KeyCode.X))
-        {
-            currentMode = MoveMode.SCATTER;
+            if (mode == 0)
+            {
+                if (Time.time > timer && currentMode == MoveMode.SCATTER)
+                {
+                    timer = Time.time + chaseTime;
+                    currentMode = MoveMode.CHASE;
+                }
+                else if (Time.time > timer && currentMode == MoveMode.CHASE)
+                {
+                    timer = Time.time + scatterTime;
+                    currentMode = MoveMode.SCATTER;
+                    mode++;
+                }
+            }
+            else if (mode == 1)
+            {
+                if (Time.time > timer && currentMode == MoveMode.SCATTER)
+                {
+                    timer = Time.time + chaseTime;
+                    currentMode = MoveMode.CHASE;
+                }
+                else if (Time.time > timer && currentMode == MoveMode.CHASE)
+                {
+                    scatterTime = 5;
+                    timer = Time.time + scatterTime;
+                    currentMode = MoveMode.SCATTER;
+                    mode++;
+                }
+            }
+            else if (mode == 2)
+            {
+                if (Time.time > timer && currentMode == MoveMode.SCATTER)
+                {
+                    timer = Time.time + chaseTime;
+                    currentMode = MoveMode.CHASE;
+                }
+                else if (Time.time > timer && currentMode == MoveMode.CHASE)
+                {
+                    timer = Time.time + scatterTime;
+                    currentMode = MoveMode.SCATTER;
+                    mode++;
+                }
+            }
+            else if (mode == 2)
+            {
+                if (Time.time > timer && currentMode == MoveMode.SCATTER)
+                {
+                    chaseTime = float.MaxValue;
+                    timer = Time.time + chaseTime;
+                    currentMode = MoveMode.CHASE;
+                }
+            }
         }
         if (Input.GetKeyUp(KeyCode.C))
         {
@@ -44,10 +103,13 @@ public class Pinky : MonoBehaviour
                 p.target = p.currentPos;
                 break;
             case MoveMode.CHASE:
-                p.target = vm.playerPos;
+                p.target = pm.transform.forward*2;
                 break;
             case MoveMode.SCATTER:
-                p.target = new Vector3(0, 0, 0);
+                p.target = new Vector3(-0.314f, 0.4297617f, -0.307f);
+                break;
+            case MoveMode.FREIGHTENED:
+                p.target = gm.nodes[Random.Range(0, gm.nodes.Count - 1)].Position;
                 break;
         }
     }
